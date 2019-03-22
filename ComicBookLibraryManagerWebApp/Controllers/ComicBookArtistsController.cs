@@ -18,11 +18,13 @@ namespace ComicBookLibraryManagerWebApp.Controllers
     {
         private ComicBookRepository _comicBookRepository = null;
         private ComicBookArtistRepository _comicBookArtistRepository = null;
+        private ArtistsRepository _artistsRepository = null;
 
         public ComicBookArtistsController()
         {
             _comicBookRepository = new ComicBookRepository(Context);
             _comicBookArtistRepository = new ComicBookArtistRepository(Context);
+            _artistsRepository = new ArtistsRepository(Context);
         }
 
         public ActionResult Add(int comicBookId)
@@ -39,7 +41,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
                 ComicBook = comicBook
             };
             
-            viewModel.Init(Repository);
+            viewModel.Init(Repository, _artistsRepository);
 
             return View(viewModel);
         }
@@ -65,7 +67,7 @@ namespace ComicBookLibraryManagerWebApp.Controllers
             }
 
             viewModel.ComicBook = _comicBookRepository.Get(viewModel.ComicBookId);
-            viewModel.Init(Repository);
+            viewModel.Init(Repository, _artistsRepository);
 
             return View(viewModel);
         }
